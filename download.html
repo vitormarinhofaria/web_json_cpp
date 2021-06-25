@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a id="btnSheet">Clique</a>
+    <script defer>
+        var Module = {
+            onRuntimeInitialized: function () {
+                var get_sheet = Module.cwrap('get_sheet', 'number',)
+                var get_file_size = Module.cwrap('get_file_size', 'number')
+                var file_size = get_file_size();
+                var filePtr = get_sheet();
+                var arr = new Uint8Array(file_size);
+                for (var i = 0; i < file_size; i++) {
+                    let val = getValue(filePtr + (i), 'i8');
+                    arr[i] = val;
+                }
+                // arr = new Uint8Array(arr);
+                console.log(arr);
+                console.log(arr.length);
+                var decoder = new TextDecoder('utf8');
+
+                var a = document.querySelector("#btnSheet"); //Create <a>
+                var blob = new Blob([arr], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                var objectUrl = URL.createObjectURL(blob);
+                a.href = objectUrl; //Image Base64 Goes here
+                a.download = "demo.xlsx"; //File name Here
+                //42aa4f05a1be023182310093ee76a3a7
+                //6261ee744d96018ddfe77d1d8f691cea
+            }
+        };
+        var ToBase64 = function (u8) {
+            return btoa(String.fromCharCode.apply(null, u8));
+        }
+    </script>
+    <script src="./index.js"></script>
+</body>
+
+</html>

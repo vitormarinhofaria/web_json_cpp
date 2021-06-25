@@ -1,0 +1,1 @@
+emcc --bind -o out/index.html -s FORCE_FILESYSTEM=1 -s EXPORTED_FUNCTIONS='["_get_sheet", "_get_file_size"]' -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap"]'  main.cpp libxlsxwriter.a libz.a
